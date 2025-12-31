@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusLearn - Platform Pembelajaran Seni Rupa</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --secondary: #4A44C6;
+            --accent: #FF6584;
+            --dark: #121212;
+            --darker: #0A0A0A;
+            --light: #F5F5F7;
+            --gray: #2A2A2E;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--darker);
+            color: var(--light);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(108, 99, 255, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 101, 132, 0.1) 0%, transparent 20%);
+        }
+
+        /* Header Styles */
+        header {
+            background-color: rgba(18, 18, 18, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--gray);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--light);
+        }
+
+        .logo-icon {
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        nav a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(108, 99, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        nav a:hover::before {
+            left: 100%;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--primary);
+            background-color: rgba(108, 99, 255, 0.1);
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .notification-btn, .user-btn {
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .notification-btn:hover, .user-btn:hover {
+            background-color: var(--gray);
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--gray);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .module-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .module-item {
+            margin-bottom: 0.75rem;
+            position: relative;
+        }
+
+        .module-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 12px;
+            color: var(--light);
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: var(--primary);
+            transform: scaleY(0);
+            transition: var(--transition);
+        }
+
+        .module-link:hover::before, .module-link.active::before {
+            transform: scaleY(1);
+        }
+
+        .module-link:hover, .module-link.active {
+            background-color: rgba(108, 99, 255, 0.1);
+        }
+
+        .module-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--gray);
+            color: var(--light);
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .module-link.active .module-number, .module-link:hover .module-number {
+            background-color: var(--primary);
+        }
+
+        .module-name {
+            flex: 1;
+        }
+
+        .progress-section {
+            margin-top: 2rem;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background-color: var(--gray);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            width: 30%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* Content Area */
+        .content-area {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--gray);
+        }
+
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--gray);
+        }
+
+        .module-title {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .module-meta {
+            color: #A0A0A0;
+            font-size: 0.9rem;
+        }
+
+        .module-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .action-btn {
+            background: var(--gray);
+            border: none;
+            color: var(--light);
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .action-btn:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Materials Grid */
+        .materials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .material-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: var(--transition);
+            border: 1px solid var(--gray);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .material-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transform: scaleX(0);
+            transition: var(--transition);
+        }
+
+        .material-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .material-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border-color: var(--primary);
+        }
+
+        .material-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .material-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .material-desc {
+            color: #A0A0A0;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .material-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .material-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #A0A0A0;
+            font-size: 0.9rem;
+        }
+
+        .material-btn {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .material-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 99, 255, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            padding: 2rem 0;
+            margin-top: 4rem;
+            border-top: 1px solid var(--gray);
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: #A0A0A0;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .copyright {
+            color: #A0A0A0;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                position: static;
+            }
+            
+            .materials-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav ul {
+                gap: 1rem;
+            }
+            
+            .module-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .module-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .footer-container {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .materials-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-palette logo-icon"></i>
+                <span>NexusLearn</span>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#beranda" class="active"><i class="fas fa-home"></i> Beranda</a></li>
+                    <li><a href="#materi"><i class="fas fa-book-open"></i> Materi</a></li>
+                    <li><a href="#tugas"><i class="fas fa-tasks"></i> Tugas</a></li>
+                    <li><a href="#diskusi"><i class="fas fa-comments"></i> Diskusi</a></li>
+                    <li><a href="#profil"><i class="fas fa-user"></i> Profil</a></li>
+                </ul>
+            </nav>
+            
+            <div class="user-actions">
+                <button class="notification-btn">
+                    <i class="fas fa-bell"></i>
+                </button>
+                <button class="user-btn">
+                    <i class="fas fa-user-circle"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="dashboard">
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <h2 class="sidebar-title">Modul Pembelajaran</h2>
+                    <i class="fas fa-list-ul"></i>
+                </div>
+                
+                <ul class="module-list">
+                    <li class="module-item">
+                        <a href="#modul1" class="module-link active">
+                            <span class="module-number">01</span>
+                            <span class="module-name">Pengenalan Materi</span>
+                        </a>
+                    </li>
+                    <li class="module-item">
+                        <a href="#modul2" class="module-link">
+                            <span class="module-number">02</span>
+                            <span class="module-name">Ragam Hias Tradisional</span>
+                        </a>
+                    </li>
+                    <li class="module-item">
+                        <a href="#modul3" class="module-link">
+                            <span class="module-number">03</span>
+                            <span class="module-name">Teknik Dasar</span>
+                        </a>
+                    </li>
+                    <li class="module-item">
+                        <a href="#modul4" class="module-link">
+                            <span class="module-number">04</span>
+                            <span class="module-name">Aplikasi Ragam Hias</span>
+                        </a>
+                    </li>
+                    <li class="module-item">
+                        <a href="#modul5" class="module-link">
+                            <span class="module-number">05</span>
+                            <span class="module-name">Proyek Kreatif</span>
+                        </a>
+                    </li>
+                    <li class="module-item">
+                        <a href="#modul6" class="module-link">
+                            <span class="module-number">06</span>
+                            <span class="module-name">Evaluasi & Ujian</span>
+                        </a>
+                    </li>
+                </ul>
+                
+                <div class="progress-section">
+                    <div class="progress-info">
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                </div>
+            </aside>
+            
+            <section class="content-area">
+                <div class="module-header">
+                    <div>
+                        <h1 class="module-title">MEDIA DAN EVALUASI PEMBELAJARAN</h1>
+                        <div class="module-meta">Terakhir diupdate: 3 NOVEMBER 2025</div>
+                    </div>
+                    
+                    <div class="module-actions">
+                        <button class="action-btn">
+                            <i class="fas fa-download"></i> Unduh Modul
+                        </button>
+                        <button class="action-btn">
+                            <i class="fas fa-share-alt"></i> Bagikan
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="materials-grid">
+                    <!-- VIDEO PEMBELAJARAN -->
+                    <div class="material-card">
+                        <div class="material-icon">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <h3 class="material-title">Video Pembelajaran</h3>
+                        <p class="material-desc">Video pengantar materi dengan penjelasan visual yang menarik dan mudah dipahami.</p>
+                        <div class="material-footer">
+                            <div class="material-meta">
+                                <i class="fas fa-clock"></i>
+                                <span>1 menit</span>
+                            </div>
+                            <a href="https://youtu.be/oYKKSveGXRs?feature=shared" class="material-btn" target="_blank">
+                                <i class="fas fa-play"></i> Tonton
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- SLIDE PRESENTASI -->
+                    <div class="material-card">
+                        <div class="material-icon">
+                            <i class="fas fa-file-powerpoint"></i>
+                        </div>
+                        <h3 class="material-title">Slide Presentasi</h3>
+                        <p class="material-desc">Materi presentasi lengkap dalam format PDF dengan ilustrasi dan contoh visual.</p>
+                        <div class="material-footer">
+                            <div class="material-meta">
+                                <i class="fas fa-file"></i>
+                                <span>25 halaman</span>
+                            </div>
+                            <a href="https://www.canva.com/design/DAG3sKnELIQ/3FlUYlwbK4oRqy2_pAhZ4A/edit?utm_content=DAG3sKnELIQ&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" class="material-btn" download>
+                                <i class="fas fa-download"></i> Unduh
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- BACAAN TAMBAHAN -->
+                    <div class="material-card">
+                        <div class="material-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h3 class="material-title">Materi PDF</h3>
+                        <p class="material-desc">Artikel dan referensi pendukung untuk memperdalam pemahaman tentang topik ini.</p>
+                        <div class="material-footer">
+                            <div class="material-meta">
+                                <i class="fas fa-newspaper"></i>
+                                <span>3 artikel</span>
+                            </div>
+                            <a href="https://drive.google.com/drive/folders/1KaSruj9syBqKHgE0jc07M42vhtNNG5F_" class="material-btn" target="_blank">
+                                <i class="fas fa-external-link-alt"></i> Buka
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- KUIS SINGKAT -->
+                    <div class="material-card">
+                        <div class="material-icon">
+                            <i class="fas fa-puzzle-piece"></i>
+                        </div>
+                        <h3 class="material-title">Kuis Singkat</h3>
+                        <p class="material-desc">Uji pemahaman Anda dengan kuis singkat tentang materi yang sudah dipelajari.</p>
+                        <div class="material-footer">
+                            <div class="material-meta">
+                                <i class="fas fa-question-circle"></i>
+                                <span>5 pertanyaan</span>
+                            </div>
+                            <a href="https://www.canva.com/design/DAG3sTjMMUk/ui7Q90RAAwy6HRppz6WfNw/edit?utm_content=DAG3sTjMMUk&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" class="material-btn" target="_blank">
+                                <i class="fas fa-play"></i> Mulai
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="#">Tentang Kami</a>
+                <a href="#">Kebijakan Privasi</a>
+                <a href="#">Syarat & Ketentuan</a>
+                <a href="#">Bantuan</a>
+            </div>
+            <div class="copyright">
+                &copy; 2023 NexusLearn. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navigasi sidebar
+        document.querySelectorAll('.module-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Hapus class active dari semua link
+                document.querySelectorAll('.module-link').forEach(el => {
+                    el.classList.remove('active');
+                });
+                
+                // Tambahkan class active ke link yang diklik
+                this.classList.add('active');
+                
+                // Scroll ke modul yang dipilih
+                const targetId = this.getAttribute('href');
+                document.querySelector(targetId).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Simulasi progress belajar
+        function updateProgress(percent) {
+            document.querySelector('.progress-fill').style.width = percent + '%';
+            document.querySelector('.progress-info span:last-child').textContent = percent + '%';
+        }
+        
+        // Inisialisasi progress
+        updateProgress();
+    </script>
+</body>
+</html>
